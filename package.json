@@ -1,0 +1,25 @@
+{
+  "name": "algorithms",
+  "version": "0.0.0",
+  "description": "Course on algorithms with Python",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "Piet Cordemans",
+  "license": "Creative Commons Attribution-ShareAlike 4.0 International License",
+  "dependencies": {},
+  "devDependencies": {
+    "vuepress": "^1.2.0",
+    "vuepress-plugin-zooming": "^1.1.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcordemans/devbit-algorithms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pcordemans/devbit-algorithms.git/issues"
+  },
+  "homepage": "https://github.com/pcordemans/devbit-algorithms.git#readme"
+}
