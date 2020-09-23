@@ -1,6 +1,8 @@
 # Algorithms
 
-Welcome to your new VuePress course. This is the README file that will display on GitHub. Please feel free to change this information. This file should reflect the content of this course.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1cc131a7-e710-423b-aae7-cdd69883ce44/deploy-status)](https://app.netlify.com/sites/devbit-algorithms/deploys)
+
+This is the source repository for the Devbit algorithms course.
 
 ## Development
 

@@ -4,20 +4,33 @@ title: Home
 
 # Algorithms
 
-> Course on algorithms with Python
+> This is the algorithms course for the Devbit curriculum. All programming examples are in Python. This course is available under the Creative Commons Attribution-ShareAlike license. Contributions to this course are accepted on [GitHub](https://github.com/pcordemans/devbit-algorithms).
 
-![Success](./assets/success.png)
+## Course goals
 
-This is the home page of your VuePress course website.
+In the algorithms course the goal is to analyse problems and select appropriate data structures and algorithms. We implement these in a software program and test them.
 
-Feel free to style it as you wish.
+## Course approach
 
-Some tips on how to start:
+1. Learn theoretical concepts on algorithms & data structures.
+2. Write software and tests in Python implementing and using these algorithms and data structures.
 
-* Refactor the `README.md` in the root of this project. It is the first page users encounter when visiting your GitHub repository.
-* Fill in this `README.md` with an introduction to your course.
-* Start a development server using `npm run docs:dev`
-* Generate pages using `yo innovet-vuepress-course:page`
-* Setup your [Netlify site](https://www.netlify.com/)
-* Commit and push your changes to GitHub on a regular base
-* Navigate to your Netlify domain url and check if the site deployed successfully.
+## Course overview
+
+The course focusses on data structures, algorithms and complexity analysis (Big O).
+
+The subjects are:
+
+* Linked Lists & Arrays
+* Recursion
+* Stack
+* Dictionary
+* Tree structures
+* Sorting algorithms
+* Graphs
+
+## Course materials
+
+## Course prerequisites
+
+* Basic programming knowledge
