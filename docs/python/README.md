@@ -747,7 +747,7 @@ obj = NameOfClass()
 
 ### Instance Variables or Attributes
 
-To assign or access attributes of the class you need to make use of the dot-notation on the `self` keyword. As with variables, in Python one does not need to declare attributes before using them.
+To assign or access attributes of the class you need to make use of the dot-notation on the `self` keyword. As with variables, in Python one does not need to declare attributes before using them. Following the convention that attributes are considered as private to the class, the attribute is prefixed with a double underscore. This will apply name mangling to the attribute name outside the scope of the class, thus making it inaccessible through its given name.
 
 ```python
 class <NameOfClass>:
@@ -760,7 +760,7 @@ class <NameOfClass>:
   # Methods ...
   def <name_of_method>(self, <arguments>):
     # Statements ...
-    self.<name_of_attribute> = <value>
+    self.__<name_of_attribute> = <value>
 ```
 
 ### Returning Values from Methods
@@ -777,48 +777,7 @@ Methods can also return a single value using the `return` keyword. In this case 
 
 Let us put all of this into practice and create a class `Robot`.
 
-```python
-class Robot:
-  """Class that models a talking robot"""
-
-  # Constructor with no arguments
-  def __init__(self):
-    # Here we set the name argument
-    # as an attribute of the object
-    self.name = "Nameless"
-
-  def say_hello(self):
-    # We can access the name attribute via the
-    # self reference and the dot-operator
-    print("Hello I am " + self.name)
-
-  # Method allows us to rename the robot
-  # @name: name of the robot
-  def set_name(self, name):
-    self.name = name
-
-  def get_name(self):
-    return self.name
-```
-
-When creating a Robot we need to save the object in a variable:
-
-```python
-# Create a Robot object
-myRobot = Robot()
-
-# Call a method on the Robot object
-myRobot.say_hello()
-
-# Rename the robot
-myRobot.set_name("Pokey")
-myRobot.say_hello()
-
-name = myRobot.get_name()
-print("The robot is called " + name)
-```
-
-To test this out you can just add the class definition of `Robot` to a Python script and place the instantiation code below it as shown here:
+When creating a Robot we need to save the object in a variable. To test this out you can just add the class definition of `Robot` to a Python script and place the instantiation code below it as shown here:
 
 ```python
 class Robot:
@@ -828,20 +787,20 @@ class Robot:
   def __init__(self):
     # Here we set the name argument
     # as an attribute of the object
-    self.name = "Nameless"
+    self.__name = "Nameless"
 
   def say_hello(self):
     # We can access the name attribute via the
     # self reference and the dot-operator
-    print("Hello I am " + self.name)
+    print("Hello I am " + self.__name)
 
   # Method allows us to rename the robot
   # @name: name of the robot
   def set_name(self, name):
-    self.name = name
+    self.__name = name
 
   def get_name(self):
-    return self.name
+    return self.__name
 
 # Create a Robot object
 myRobot = Robot()
