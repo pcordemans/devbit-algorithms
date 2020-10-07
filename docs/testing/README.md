@@ -92,7 +92,7 @@ Don't forget to save the test before running it.
 
 ### Object equivalence
 
-When defining a class the default comparison of objects is by reference, namely do the objects have the same address? However two objects with a different address might be considered equivalent if they have the same members. In order to define this, the **__eq__(self, other)** method must be defined. An example:
+When defining a class the default comparison of objects is by reference, namely do the objects have the same address? However two objects with a different address might be considered equivalent if they have the same members. In order to define this, the **\_\_eq\_\_(self, other)** method must be defined. An example:
 
 ```python
 #robot.py
@@ -125,3 +125,32 @@ class Robot:
 ```
 
 Rerunning the test should pass.
+
+### Pretty error messages
+
+In test output the value of objects is not human readable. The *\_\_repr\_\_* method allows to describe e a useful representation of the object.
+
+```python
+#robot.py
+class Robot:
+    def __init__(self, name):
+        self.__name = name
+
+    def __eq__(self, other):
+        return isinstance(other, Robot) and self.get_name() == other.get_name()
+    
+    def get_name(self):
+        return self.__name
+
+    def __repr__(self):
+        return self.get_name()
+```
+
+Note there is also a *\_\_str\_\_* method. This method is intended for external use, namely casting the object to a string.
+
+```python
+robot = Robot("rob")
+print(str(robot))
+```
+
+If *\_\_str\_\_* is undefined in the class, the output of the *\_\_repr\_\_* method is used. It is possible to provide a different implementation to the *\_\_str\_\_* method.
