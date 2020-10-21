@@ -154,3 +154,60 @@ print(str(robot))
 ```
 
 If *\_\_str\_\_* is undefined in the class, the output of the *\_\_repr\_\_* method is used. It is possible to provide a different implementation to the *\_\_str\_\_* method.
+
+## Conda
+
+Installing packages with your Python installation quickly becomes a convoluted mess. In order to solve this problem, **Conda** the package and environment manager was developed. It allows to quickly install, run and update packages and their dependencies. Conda creates an "environment" in which a specific version of each package can be loaded or even a specific version of a Python interpreter. It installs packages from the Anaconda repository.
+
+1. Install [miniconda3](https://docs.conda.io/en/latest/miniconda.html) for your OS.
+1. Add *install_path_of_miniconda/Scripts* to your PATH environment variable.
+1. Check the installation with:
+
+    ```powershell
+    conda --version
+    ```
+
+1. Update conda:
+
+    ```powershell
+    conda update conda
+    ```
+
+1. Open a Powershell with administrator privileges and initialize Conda with the powershell environment:
+
+    ```powershell
+    conda init powershell
+    ```
+
+1. Create a Conda environment with the CPython 3.8 interpreter and activate that environment:
+
+    ```powershell
+    conda create -n [insert env name] python=3.8
+    conda activate [insert env name]
+    ```
+
+1. Check all Conda environments (the environment indicated with a * is activated)
+
+    ```powershell
+    conda info --envs
+    ```
+
+1. Check which programs are installed in the current Conda environment
+
+    ```powershell
+    conda list
+    ```
+
+1. Install a package in the current environment (for instance the numpy package)
+
+    ```powershell
+    conda install numpy
+    ```
+
+:::warning
+Check the Python interpreter used in VS Code. Run the *Python: Select interpreter* command (Ctrl + Shift + P) and select the interpreter used by the Conda environment. 
+:::
+
+:::tip
+You might want to view more information in your shell about your git status and conda environment. Personally, I recommend Windows Terminal, Powershell with posh-git and oh-my-posh, and a nice font which supports ligatures and glyphs like Fira Code NF. [More information](https://www.hanselman.com/blog/how-to-make-a-pretty-prompt-in-windows-terminal-with-powerline-nerd-fonts-cascadia-code-wsl-and-ohmyposh)
+:::

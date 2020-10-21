@@ -7,7 +7,12 @@ module.exports = {
       { text: 'Company', link: 'https://toledo.vives.be' },
       { text: 'License', link: '/LICENSE.md' },
     ],
-    sidebar: [['/', 'Home'], ['/python/', 'Python'], ['/testing/', 'Testing']],
+    sidebar: [
+      ['/', 'Home'],
+      ['/python/', 'Python'],
+      ['/testing/', 'Testing'],
+      ['/big-o/', 'Complexity Analysis']
+    ],
     repo: 'https://github.com/pcordemans/devbit-algorithms.git',
     docsDir: 'docs',
     docsBranch: 'master'
