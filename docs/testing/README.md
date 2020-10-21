@@ -205,7 +205,7 @@ Installing packages with your Python installation quickly becomes a convoluted m
     ```
 
 :::warning
-Check the Python interpreter used in VS Code. Run the *Python: Select interpreter* command (Ctrl + Shift + P) and select the interpreter used by the Conda environment. 
+Check the Python interpreter used in VS Code. Run the *Python: Select interpreter* command (Ctrl + Shift + P) and select the interpreter used by the Conda environment. If you cannot find the Conda environment with the given name, try restarting VS Code.
 :::
 
 :::tip
