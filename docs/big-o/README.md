@@ -92,3 +92,109 @@ Changing the dimensions of the matrix to make it a square matrix with dimensions
 | 1 000| 2 000 000 |  1 001 000 |
 | 10 000| 200 000 000 |  100 010 000 |
 | 100 000| 20 000 000 000 |  10 000 100 000 |
+
+## Big-O
+
+In the example, the function expressing the number of calculations is given as **T(n)**.
+
+How is **T(n)** determined? Simply count each statement. Function calls, assignments, operations, loop or branch statements, return call, etc. This is an approximation of course, as it ignores different execution times in operations, for example floating point versus integer arithmetic, and it also ignores operations which require access to memory.
+
+In the example the first version of the algorithm **T(n) = 2n²**. In the second version of the algorithm **T(n) = n² + n**.
+
+Rather than determining the exact number of calculations **T(n)**, a Big-O analysis gives an indication in the order of magnitude. The Big-O notation is **O(f(n))**, this can be read as Big-O of the function (f) given a number of elements (n). Only the highest order term of **T(n)** is considered, lower order terms and constants are ignored.
+
+In both cases of the example algorithm the Big-O is given by **O(n²)**.
+
+### Classes of algorithms
+
+Time-complexity functions f(n) are selected from a small set of functions:
+
+| f( ) | Common name |
+| ----- | ----- |
+| 1 | constant |
+| log(n) | logarithmic |
+| n | linear |
+| n log(n) | log linear |
+| n² | quadratic |
+| n^m | polynomial |
+| a^n | exponential |
+| n! | factorial |  
+
+A couple of examples of algorithms and their respective Big-O:
+
+```python
+def sum(n):
+    total = 0
+    for i in range(n):
+        total += i
+    return total
+```
+
+This sum function loops over the range n so it is O(n).
+
+```python
+def sum2(n):
+    total = 0
+    for i in range (n):
+        for j in range(n):
+            total += 1
+    return total
+```
+
+The sum2 function has a nested loop and the inner statements are executed n*n times. So it is O(n²).
+
+```python
+def sum3(n):
+    total = 0
+    for i in range (n):
+        for j in range(i):
+            total += 1
+    return total
+```
+
+The sum3 function has a nested loop and the inner statements are executed n*i times. Although sum3 will definitely execute less addition operations than sum2, i will eventually approximate n. So sum3 is also O(n²).
+
+```python
+def sum4(n):
+    total = 0
+    i = n
+    while i >= 1:
+        total += 1
+        i = i / 2
+    return total
+```
+
+The sum4 function has a loop iterator which halves each iteration. This approximates the binary log function. This leads to O(log n).
+
+```python
+def sum5(n):
+    total = 0
+    for i in range(n):
+        total += sum4(n)
+    return total
+```
+
+The sum5 function loops over the range of n. In this loop sum4 is called, thus calling sum4 n times. The sum5 function is O(n log n).
+
+If the algorithm short-circuits its computation given a condition, the best case, average case and worst case might differ. An example:
+
+```python
+# returns the position of the first negative number in a list
+# if the list does not contain any negative numbers it will return -1
+def containsNN(l):
+    for i in range(len(l)):
+        if l[i] < 0:
+            return i
+    return -1
+
+list1 = [3, 45, 1, 17, 12, 32, 22, 89, 15, 77]
+list2 = [-12, 45, 1, 17, 12, 32, 22, 89, 15, 77]
+```
+
+Calling containsNN on list1 loops over the whole list, while on list2 the function immediately returns. Most of the time, in Big-O the worst case is considered. In some algorithms, the average case and worst case wildly differ, e.g. Quicksort. In a Big-O analysis this is typically mentioned explicitly.
+
+### Insertion sort
+
+Insertion sort is a sorting algorithm which is effective on small data sets. 
+
+### Binary search
