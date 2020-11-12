@@ -11,7 +11,8 @@ module.exports = {
       ['/', 'Home'],
       ['/python/', 'Python'],
       ['/testing/', 'Testing'],
-      ['/big-o/', 'Complexity Analysis']
+      ['/big-o/', 'Complexity Analysis'],
+      ['/linked-lists/', 'Linked Lists']
     ],
     repo: 'https://github.com/pcordemans/devbit-algorithms.git',
     docsDir: 'docs',
