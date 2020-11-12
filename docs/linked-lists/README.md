@@ -49,7 +49,7 @@ The _Node class starts with a underscore to indicate it should not be used outsi
 
 In a single linked list, the first node is known as the *head*. All other nodes are defined as the *tail*. When traversing through the list to the last node, the last node ends the single linked list with a reference to **None**. This is indicated in the figure with a ground symbol.
 
-![A single linked lists consists of nodes, a head, a tail and ends with None.](./assets/node.png)
+![A single linked lists consists of nodes, a head, a tail and ends with None.](./assets/sllist.png)
 
 The Single Linked List class is constructed as follows:
 
