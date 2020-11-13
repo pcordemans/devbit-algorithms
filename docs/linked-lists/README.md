@@ -133,7 +133,7 @@ First let's count the number of elements in the list using a loop.
 
 ```python
     #returns the number of elements in the list
-    def count(self):
+    def size(self):
         count = 0
         cursor = self.__head
         while not cursor is None:
@@ -150,23 +150,23 @@ It is also possible to write a recursive method to traverse the list.
 
 ```python
     #returns the number of elements in the list
-    def count(self):
-        def rcount(n, node):
+    def size(self):
+        def count(n, node):
             if node is None:
                 return n
             else:
-                return rcount(n+1, node.next())
+                return count(n+1, node.next())
 
-        return rcount(0, self.__head)
+        return count(0, self.__head)
 ```
 
-In order to keep the interface of the count method the same, a nested function is used. The nested function *rcount* has two parameters, (1) the number of counted elements *n* and (2) the cursor *node*. If *node* is **None**, the end of the list has been reached and the method can return the number of elements. In the other case the number of elements is incremented and the cursor node becomes the next node. 
+In order to keep the interface of the count method the same, a nested function is used. The nested function *count* has two parameters, (1) the number of counted elements *n* and (2) the cursor *node*. If *node* is **None**, the end of the list has been reached and the method can return the number of elements. In the other case the number of elements is incremented and the cursor node becomes the next node. 
 
-Now, only the first call of rcount needs to be constructed. This will bootstrap the recursive function. Calling *rcount* with initial values 0 and the head of the single linked list, does the trick.
+Now, only the first call of *count* needs to be constructed. This will bootstrap the recursive function. Calling *count* with initial values 0 and the head of the single linked list, does the trick.
 
 ### Analysis
 
-Big-O analysis of the single linked list reveals that most operations are constant time. Except for methods which traverse the list, such as count. This is in linear time, which is to be expected.
+Big-O analysis of the single linked list reveals that most operations are constant time. Except for methods which traverse the list, such as *size*. This is in linear time, which is to be expected.
 
 | Method | Big-O |
 | ----- | ----- |
