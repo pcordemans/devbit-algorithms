@@ -42,7 +42,7 @@ class _Node:
 ```
 
 :::tip
-The _Node class starts with a underscore to indicate it should not be used outside the scope of a Single Linked List class. When import from the Python file, it will not be automatically included. This has a good reason. A node is actually part of the implementation of the Single Linked List and when defining the Single Linked List class, no nodes should be exposed to the user of the Single Linked List. An important design principle in programming is to program towards an interface, not an implementation. This way the implementation might change, while the interface remains the same.
+The _Node class starts with a underscore to indicate it should not be used outside the scope of a Single Linked List class. When imported from the Python file, symbols starting with an underscore will not be automatically included. This has a good reason. A node is actually part of the implementation of the Single Linked List and when defining the Single Linked List class, no nodes should be exposed to the user of the Single Linked List. An important design principle in programming is to program towards an interface, not an implementation. This way the implementation might change, while the interface remains the same.
 :::
 
 ### Constructing single linked lists
@@ -71,13 +71,10 @@ list = SingleLinkedList()
 It is important to check if the list is empty before accessing the head element. If the list is empty, head will refer to **None**. Calling any method on **None** will result in an **AttributeError**.
 
 ```python
-    # returns True if the singly linked list does not contain any elements
+    # returns True if the single linked list does not contain any elements
     def isEmpty(self):
-        if self.__head is None:
-            return True
-        else:
-            return False
-
+        return self.__head is None
+            
     # returns the first element in the singly linked list or None if empty
     def head(self):
         if self.isEmpty():
@@ -91,7 +88,7 @@ Rather than returning the Node (which should be kept private, don't show any pri
 If the head of the single linked list is the first element, then the tail is the rest of the list. The tail of a single linked list is a single linked list by itself.
 
 ```python
-# returns a singly linked list containing all but the first element
+# returns a single linked list containing all but the first element
     def tail(self):
         if self.isEmpty():
             return SingleLinkedList()
@@ -99,7 +96,7 @@ If the head of the single linked list is the first element, then the tail is the
             return SingleLinkedList(self.__head.next())
 ```
 
-When calling tail on an empty list, the method returns an empty single linked list.
+To prevent an AttributeError when calling tail on an empty list, the method returns an empty single linked list.
 
 ### Adding elements
 
@@ -123,11 +120,11 @@ In this implementation of the prepend method, the **self** reference is returned
     list.prepend(3).prepend(2).prepend(1)
 ```
 
-The opposite of addings elements is removing them. Removing the head element of the list is actually already implemented. Calling the tail method removes the head element.
+The opposite of adding elements is removing them. Removing the head element of the list is actually already implemented. Calling the tail method returns a list which does not include the original head element. Note that the original list still remains unchanged.
 
 ### Traversing the list
 
-Iterating over the single linked list can be done in two ways. With a loop or recursively. 
+Iterating over the single linked list can be done in two ways: with a loop or recursively.
 
 First let's count the number of elements in the list using a loop.
 
@@ -146,23 +143,23 @@ Traversing a single linked list with a loop usually requires a cursor, this curs
 
 ![Traversing a linked list with a cursor](./assets/traversing-list.png)
 
-It is also possible to write a recursive method to traverse the list. 
+It is also possible to write a recursive method to traverse the list.
 
 ```python
     #returns the number of elements in the list
     def size(self):
-        def count(n, node):
-            if node is None:
+        def count(n, cursor):
+            if cursor is None:
                 return n
             else:
-                return count(n+1, node.next())
+                return count(n+1, cursor.next())
 
         return count(0, self.__head)
 ```
 
-In order to keep the interface of the count method the same, a nested function is used. The nested function *count* has two parameters, (1) the number of counted elements *n* and (2) the cursor *node*. If *node* is **None**, the end of the list has been reached and the method can return the number of elements. In the other case the number of elements is incremented and the cursor node becomes the next node. 
+In order to keep the interface of the count method the same, a nested function is used. The nested function *count* has two parameters, (1) the number of counted elements *n* and (2) the *cursor* node. If *cursor* is **None**, the end of the list has been reached and the method can return the number of elements. In the other case the number of elements is incremented and the cursor node becomes the next node. 
 
-Now, only the first call of *count* needs to be constructed. This will bootstrap the recursive function. Calling *count* with initial values 0 and the head of the single linked list, does the trick.
+Now, only the first call of *count* needs to be constructed. This will bootstrap the recursive function. Calling *count* with initial values 0 and the head of the single linked list, does the trick. Looking closely at both versions of the size method, reveals that both are actually similar. Yet initialization, the stop condition, progressing through the list and the actual operations to calculate the count have been rearranged.
 
 ### Analysis
 
