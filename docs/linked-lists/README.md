@@ -98,7 +98,7 @@ If the head of the single linked list is the first element, then the tail is the
 
 To prevent an AttributeError when calling tail on an empty list, the method returns an empty single linked list.
 
-### Adding elements
+### Adding elements to a single linked list
 
 Typically elements are prepended to a single linked list. This means the element is placed before the head element, and becomes the head element of the list itself. The reason to prepend rather than append is that only the head element is accessible.
 
@@ -174,5 +174,147 @@ Big-O analysis of the single linked list reveals that most operations are consta
 | traverse | O(n) |
 
 ## Double Linked Lists
+
+A double linked list consists of nodes which refer not only to the next but also to the previous node. This can be illustrated as
+
+![A double linked list node](./assets/dll-node.png)
+
+In Python this is written as
+
+```python
+class _Node:
+    def __init__(self, prevNode, nextNode, element):
+        self.__prev = prevNode
+        self.__next = nextNode
+        self.__element = element
+
+    def get(self):
+        return self.__element
+
+    def next(self):
+        return self.__next
+
+    def prev(self):
+        return self.__prev
+    
+    def setNext(self, node):
+        self.__next = node
+
+    def setPrev(self, node):
+        self.__prev = node
+```
+
+Note *setNext* and *setPrev* methods, these will be needed when adding and removing nodes.
+
+Whereas in a single linked list, the end of the list was identified by **None**, the double linked list will use two sentinels. Sentinels are special nodes, as they do not contain an element. These sentinels will indicate the front and the back of the double linked list. The front sentinel is called the header and the back sentinel the trailer.
+
+An empty double linked list consists of only its sentinels.
+
+![An empty double linked list](./assets/empty-dll.png)
+
+As a sentinel is a special kind of node, inheritance is used to define a **_Sentinel** class derived from the parent class **_Node**.
+
+```python
+class _Sentinel(_Node):
+    def __init__(self):
+        super().__init__(None, None, None)  
+```
+
+:::tip
+In Python the parent class is placed between brackets after the declaration of the derived class.
+
+In order to access the parent object **super()** is called.
+:::
+
+Through inheritance, **_Sentinel** inherits all attributes and methods from **_Node**. The constructor overwrites the *super* constructor, by calling the parent contstructor, effectively initializing the *prev*, *next* and *element* with **None**.
+
+As the sentinel contains no element, this will remain **None**. If the sentinel is a header then *prev* will also remain **None**. In the case of a trailer, instead of *prev* its *next* will remain **None**.
+
+The *next* of a header and *prev* of a trailer will change, but can only get the correct reference when constructing a double linked list.
+
+### Constructing double linked lists
+
+```python
+class DoubleLinkedList:
+    def __init__(self):
+        self.__header = _Sentinel()
+        self.__trailer = _Sentinel()
+        self.__header.setNext(self.__trailer)
+        self.__trailer.setPrev(self.__header)
+```
+
+When constructing the double linked list object, a header and trailer sentinel are made. Then the header will refer to the trailer as *next*, and the trailer will refer to the header as *prev*, as long as the list contains no elements.
+
+Determining whether the double linked list is empty, is by checking if next to the header is the trailer. Note this could also be checked the other way around.
+
+```python
+    def isEmpty(self):
+        return isinstance(self.__header.next(), _Sentinel)
+```
+
+:::tip
+The Python built-in function **isinstance** returns True if the first parameter has the type indicated by the second parameter. If not, False.
+:::
+
+### Adding elements to a double linked list
+
+Adding elements in a double linked list, can be done from both front and back.
+
+![Double linked list with a single element](./assets/dll-single.png)
+
+Each operation involves setting four references right. As a sentinel is a special kind of node, the difference between a sentinel and a node can be ignored in the operation.
+
+1. The new node has to set its *prev* reference to the previous node.
+1. The new node has to set its *next* reference to the next node.
+1. The previous node has to update its *next* reference to the new node.
+1. The next node has to update its *prev* reference to the new node.
+
+```python
+    def addFront(self, element):
+        node = _Node(self.__header, self.__header.next(), element)
+        self.__header.next().setPrev(node)
+        self.__header.setNext(node)
+        return self
+```
+
+In the *addFront* method a new node is constructed with the header sentinel as its *prev* reference and the old node next to the header sentinel as its *next* reference. Then, the next node, has its *prev* reference updated to the new node. Finally, the header sentinel updates its *next* reference to the new node.
+
+Adding an element to the back is similar, yet the trailer is used to discover the previous node.
+
+### Accessing front and back of a double linked list
+
+The trailer and header sentinel are used to respectively fetch the back and front element. If the list is empty, **None** is returned in order to avoid an AttributeError.
+
+```python
+    def front(self):
+        if self.isEmpty():
+            return None
+        return self.__header.next().get()
+
+    def back(self):
+        if self.isEmpty():
+            return None
+        return self.__trailer.prev().get()
+```
+
+### Removing elements from a double linked list
+
+Just as elements can be added both to the front and back of a double linked list, they can be removed as well from both directions. It is important to update the *next* of the previous node and the *prev* of the node next node to be deleted.
+
+An example for removing elements from the front:
+
+```python
+    def removeFront(self):
+        if self.isEmpty():
+            return None
+        node = self.__header.next()
+        self.__header.setNext(node.next())
+        node.next().setPrev(self.__header)
+        return node.get()
+```
+
+To avoid errors, return **None** when the list is empty, otherwise return the element of the deleted node.
+
+Removing the node from the back is similar.
 
 ## Circular Linked Lists
