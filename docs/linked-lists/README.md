@@ -161,7 +161,7 @@ In order to keep the interface of the count method the same, a nested function i
 
 Now, only the first call of *count* needs to be constructed. This will bootstrap the recursive function. Calling *count* with initial values 0 and the head of the single linked list, does the trick. Looking closely at both versions of the size method, reveals that both are actually similar. Yet initialization, the stop condition, progressing through the list and the actual operations to calculate the count have been rearranged.
 
-### Analysis
+### Analysis of the single linked list
 
 Big-O analysis of the single linked list reveals that most operations are constant time. Except for methods which traverse the list, such as *size*. This is in linear time, which is to be expected.
 
@@ -317,4 +317,32 @@ To avoid errors, return **None** when the list is empty, otherwise return the el
 
 Removing the node from the back is similar.
 
+:::tip
+Python and more specifically, its reference implementation CPython, is a garbage-collected language. When an object no longer has any references to it, the garbage collector will flag and eventually remove the object.
+:::
+
+### Analysis of the double linked list
+
+When compared to the single linked list, the double linked list has the advantage of constant time operations on the back of the list. Its main disadvantage is it requires more memory to store each node. Note that most methods require more operations in a double linked list. When analyzing these with Big-O this is a constant number of operations, so this will be ignored.
+
+| Method | Big-O |
+| ----- | ----- |
+| isEmpty | O(1) |
+| front | O(1) |
+| back | O(1) |
+| addFront | O(1) |
+| addBack | O(1) |
+| removeFront | O(1) |
+| removeBack | O(1) |
+| traverse | O(n) |
+
 ## Circular Linked Lists
+
+In a circular linked list, the list does not end. Rather, calling next on the "last" node of a circular linked list, will refer to the "first" node. Instead of a head, the single linked list has a cursor, selecting a node in the list. This cursor can be moved through the list.
+
+![Circular linked list example](./assets/circular-ll.png)
+
+A circular linked list can be implemented:
+
+1. As a single linked list, progressing left to right when calling next.
+1. As a double linked list, being able to go left and right from the cursor.
