@@ -283,17 +283,13 @@ Adding an element to the back is similar, yet the trailer is used to discover th
 
 ### Accessing front and back of a double linked list
 
-The trailer and header sentinel are used to respectively fetch the back and front element. If the list is empty, **None** is returned in order to avoid an AttributeError.
+The trailer and header sentinel are used to respectively fetch the back and front element. If the list is empty, **None** is returned.
 
 ```python
     def front(self):
-        if self.isEmpty():
-            return None
         return self.__header.next().get()
 
     def back(self):
-        if self.isEmpty():
-            return None
         return self.__trailer.prev().get()
 ```
 
