@@ -13,7 +13,8 @@ module.exports = {
       ['/testing/', 'Testing'],
       ['/big-o/', 'Complexity Analysis'],
       ['/linked-lists/', 'Linked Lists'],
-      ['/stack/', 'Stack']
+      ['/stack/', 'Stack'],
+      ['/tree/', 'Tree']
     ],
     repo: 'https://github.com/pcordemans/devbit-algorithms.git',
     docsDir: 'docs',
