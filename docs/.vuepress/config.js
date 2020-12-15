@@ -4,7 +4,7 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Company', link: 'https://toledo.vives.be' },
+      { text: 'Toledo', link: 'https://toledo.vives.be' },
       { text: 'License', link: '/LICENSE.md' },
     ],
     sidebar: [

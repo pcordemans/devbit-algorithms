@@ -93,3 +93,150 @@ A tree traversal is a visit of each of the nodes of a tree in a particular order
     1. from the right
 
 Example for the Euler tour: A left -> B left -> D left -> H left -> H below -> H right -> D below -> I left -> I below -> I right -> D right -> B below -> E left -> J left -> J below -> J right -> E below -> E right -> B right -> A below -> C left -> F left -> F below -> F right -> C below -> G left -> G below -> G right -> C right -> A right
+
+## Tree example
+
+As an example of a software problem which requires a tree, a filesystem can be built. A filesystem is a hierarchical structure of directories, in which directories and files can be stored. In this filesystem the following is defined:
+
+* The filesystem has a single root and it is named "/"
+* *ls* lists all files and directories in the current directory
+* *mkdir* creates a new directory with a given name in the current directory
+  * a directory has a size of 1 plus the size of all files and directories contained in the directory
+* *touch* creates a new file with a given name in the current directory
+  * a file has a given size
+* *cd* changes the current directory
+  * ".." changes the current directory to its parent
+  * "name" changes the current directory to the subdirectory of the original current directory
+
+First, a TreeNode is defined, the TreeNode is an abstract class. An abstract class is a class which should not be instantiated, i.e. no objects of this class should be created. Rather it serves as a template for classes derived from the abstract class. This means it defines what is common between all derived classes. Note: Python does not provide language support for an abstract class, it remains in fact a regular class.
+
+```python
+class _TreeNode:
+    def __init__(self, element, parent):
+        self._element = element
+        self._children = []
+        self._parent = parent
+
+    def size(self):
+        pass
+
+    def element(self):
+        pass
+
+    def parent(self):
+        return self._parent
+
+    def isRoot(self):
+        return self._parent is None
+```
+
+A TreeNode consists of an element, a reference to the parent TreeNode, and a list of its children TreeNodes. The element in this filesystem will be the name of the file or directory.
+
+The methods *size* and *element* are defined as a common method between all derived classes. However, no common implementation is given in this class. Rather it depends on whether the TreeNode is a Directory or a File.
+
+The *isRoot* method checks if the TreeNode has a parent, if not it is the root of the Tree.
+
+:::tip
+Using inheritance, to define specific behavior in the derived classes with a common method, is a good example of replacing conditional logic. Rather, a system called dynamic dispatch will call the correct method based on the object's type. In this example: if the object is a File then the *size* method of the File class is called. When the object is a Directory, the *size* method of the Directory class will be called.
+:::
+
+```python
+class _File(_TreeNode):
+    def __init__(self, name, parentDirectory, size):
+        super().__init__(name, parentDirectory)
+        self.__size = size
+
+    def size(self):
+        return self.__size
+
+    def element(self):
+        return "f: " + self._element
+```
+
+The File class is derived from the TreeNode class.
+
+* Its *size* is defined by an attribute 
+* When the *element* method is called, it returns the filename prepended with an "f: " to indicate it is a file.
+
+```python
+class _Directory(_TreeNode):
+    def __init__(self, name, parentDirectory):
+        super().__init__(name, parentDirectory)
+
+    def size(self):
+        s = 1
+        for node in self._children:
+            s += node.size()
+        return s
+
+    def items(self):
+        return map(lambda i: i.element(), self._children)
+
+    def addChild(self, item):
+        self._children.append(item)
+
+    def element(self):
+        return "d: " + self._element
+
+    def find(self, name):
+        node = None
+        for child in self._children:
+            if child._element == name:
+                node = child
+        return node
+```
+
+The Directory class is also derived from the TreeNode class.
+
+* Its *size* is calculated by a recursive method. Calling size will traverse the tree in **preorder**.
+* When the *element* method is called, it returns the directory name prepended with an "d: " to indicate it is a directory.
+* The *addChild* method appends a new child to the list of children. This corresponds with creating subdirectories.
+* The *find* method allows to retrieve a child TreeNode based on its name. If the name cannot be found in the children TreeNodes, None is returned.
+* The *items* method returns a map of the children of the TreeNode. Rather than returning the children TreeNodes, only the element name of all children are returned.
+
+:::tip
+The map function requires two parameters: first a function to be called on each of the elements of a collection and second the collection itself.
+The keyword **lambda** indicates an anonymous function. This is a function without a name, which is defined at the place of the first parameter of the map function. Before the semicolon, a name is given to the cursor which is going to iterate over the individual elements of the collection. Behind the semicolon a statement is defined which must be executed at each element of the collection.
+
+A small graphic overview of the map in the example:
+
+![Map with a lambda in the Directory items method](./assets/map.png)
+
+:::
+
+The Tree is the filesystem. The public methods of the filesystem are named after the equivalent Unix commands.
+
+```python
+class Tree:
+    def __init__(self):
+        self.__root = _Directory("/", None)
+        self.__current = self.__root
+
+    def size(self):
+        return self.__root.size()
+
+    def ls(self):
+        return list(self.__current.items())
+
+    def touch(self, name, size):
+        self.__current.addChild(_File(name, self.__current, size))
+
+    def mkdir(self, name):
+        self.__current.addChild(_Directory(name, self.__current))
+   
+    def cd(self, param):
+        if param == ".." and not self.__current.isRoot():
+            self.__current = self.__current.parent()
+        else:
+            node = self.__current.find(param)
+            if node is None:
+                return
+            else:
+                self.__current = node
+
+```
+
+* Creating a Tree (or filesystem in this case), sets a root directory, and creates a current directory, which refers to the root at creation.
+* The *ls* method uses the *items* method of the Directory class. However, whereas the *items* method returns a map, ls will return a list. Conversion between list and map is straightforward.
+* The methods *touch* and *mkdir* are quite similar. A child TreeNode is added to the current directory. Only the relevant subclass of TreeNode is created, respectively File and Directory.
+* The *cd* method either goes to the parent directory when the parameter ".." is given or checks whether the given parameter is contained in the current directory. If it does, it changes the current directory to the corresponding TreeNode, if not, nothing happens.
