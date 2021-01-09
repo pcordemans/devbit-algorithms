@@ -19,7 +19,7 @@ A tree has a recursive definition:
 
 * A *parent* is the node of which the current node is a child. Note: the root node has no parent. For example **A** is the parent of **C**.
 * An *ancestor* is either the parent or a parent's node parent. Note: this is a recursive definition. For example **B** and **A** are ancestors of **E**.
-* The *siblings* are the nodes which have the same parent. For example **E**, **F**, and **G** are siblings.
+* The *siblings* are the nodes which have the same parent. For example **F**, and **G** are siblings.
 * *External* nodes are leaves or the root node. For example **A**, **D**, **E**, **F**, and **G** are external nodes.
 * *Internal* nodes are nodes which are not an external node. For example **B**, and **C** are internal nodes.
 

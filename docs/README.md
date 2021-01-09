@@ -31,6 +31,12 @@ The subjects are:
 
 ## Course materials
 
+Source code of the code examples 
+[GitHub repository with code examples](https://github.com/pcordemans/algorithms_examples)
+
+Contributions to or discussions about the course 
+[GitHub repository of the course content](https://github.com/pcordemans/devbit-algorithms)
+
 ## Course prerequisites
 
 * Basic programming knowledge
